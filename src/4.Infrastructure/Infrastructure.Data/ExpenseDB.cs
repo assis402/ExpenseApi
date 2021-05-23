@@ -7,17 +7,17 @@ using MongoDB.Driver;
 
 namespace Infrastructure.Data
 {
-    public class MongoDB
+    public class ExpenseDB
     {
         public IMongoDatabase DB { get; }
 
-        public MongoDB(IConfiguration configuration)
+        public ExpenseDB(IConfiguration configuration)
         {
             try
             {
                 var settings = MongoClientSettings.FromUrl(new MongoUrl(configuration["ConnectionString"]));
                 var client = new MongoClient(settings);
-                DB = client.GetDatabase(configuration["NomeBanco"]);
+                DB = client.GetDatabase(configuration["DataBase"]);
                 MapClasses();
             }
             catch (Exception ex)

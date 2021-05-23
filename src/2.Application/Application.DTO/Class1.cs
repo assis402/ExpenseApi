@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Infrastructure.Repository
+namespace Application.DTO
 {
     public class Class1
     {
