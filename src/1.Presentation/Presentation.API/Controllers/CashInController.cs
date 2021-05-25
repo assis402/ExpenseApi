@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using MongoDB.Driver;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Infrastructure.Data;
-using Domain.Entities;
+﻿using Microsoft.AspNetCore.Mvc;
+using Application.Interfaces;
+using Application.DTO;
 
 namespace Presentation.API.Controllers
 {
@@ -14,21 +8,18 @@ namespace Presentation.API.Controllers
     [Route("[controller]")]
     public class CashInController : ControllerBase
     {
-        ExpenseDB _mongoDB;
-        IMongoCollection<CashIn> _cashInsCollection;
 
-        public CashInController(Data.MongoDB mongoDB)
+        private readonly ICashInApplication _applicantion;
+
+        public CashInController(ICashInApplication applicantion)
         {
-            _mongoDB = mongoDB;
-            _cashInsCollection = _mongoDB.DB.GetCollection<CashIn>(typeof(CashIn).Name.ToLower());
+            _applicantion = applicantion;
         }
 
         [HttpPost]
-        public ActionResult Post([FromBody] CashInDto dto)
+        public ActionResult Post([FromBody] CashInDTO cashInDTO)
         {
-            CashIn CashIn = new CashIn(dto.Description, dto.Month, dto.Value);
-
-            _cashInsCollection.InsertOne(CashIn);
+            var cashIn = _applicantion.Save(cashInDTO);
             
             return StatusCode(201, "CashIn adicionado com sucesso");
         }
@@ -36,7 +27,7 @@ namespace Presentation.API.Controllers
         [HttpGet]
         public ActionResult Get()
         {
-            var CashIns = _cashInsCollection.Find(Builders<CashIn>.Filter.Empty).ToList();
+            var CashIns = _applicantion.FindAll();
             
             return Ok(CashIns);
         }

@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Infrastructure.Data;
+using Application.Services;
 
 namespace Presentation.API
 {
@@ -20,6 +21,7 @@ namespace Presentation.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<ExpenseDB>();
+            services.AddScoped<CashInApplication>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
