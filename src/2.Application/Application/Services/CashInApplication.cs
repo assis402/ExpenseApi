@@ -10,18 +10,18 @@ namespace Application.Services
 {
     public class CashInApplication : ICashInApplication
     {
-        private readonly IBaseService<CashIn> _service;
+        private readonly IBaseService<User> _service;
         private readonly ICashInMapper _mapper;
 
-        public CashInApplication(IBaseService<CashIn> service, ICashInMapper mapper)
+        public CashInApplication(IBaseService<User> service, ICashInMapper mapper)
         {
             _service = service;
             _mapper = mapper;
         }
 
-        public async Task<ICollection<CashInDTO>> FindAll()
+        public async Task<ICollection<CashInDTO>> GetAll(string userId)
         {
-            var cashIns = await _service.FindAll();
+            var cashIns = await _service.GetAll();
             return _mapper.MapperListCashIn(cashIns);
         }
 

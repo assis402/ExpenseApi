@@ -12,6 +12,11 @@
     <ProjectReference Include="..\..\4.Infrastructure\Infrastructure.Data\Infrastructure.Data.csproj" />
     <ProjectReference Include="..\..\2.Application\Application\Application.csproj" />
     <ProjectReference Include="..\..\2.Application\Application.DTO\Application.DTO.csproj" />
+    <ProjectReference Include="..\..\4.Infrastructure\Infrastructure.Adapter\Infrastructure.Adapter.csproj" />
+    <ProjectReference Include="..\..\3.Domain\Domain.Services\Domain.Services.csproj" />
+    <ProjectReference Include="..\..\3.Domain\Domain.Core\Domain.Core.csproj" />
+    <ProjectReference Include="..\..\4.Infrastructure\Infrastructure.Repository\Infrastructure.Repository.csproj" />
+    <ProjectReference Include="..\..\3.Domain\Domain\Domain.csproj" />
   </ItemGroup>
 
 </Project>

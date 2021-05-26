@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Domain.Core.Repository;
-using Domain.Core.Services;
+using Domain.Core.Service;
 
 namespace Domain.Services
 {
@@ -14,14 +14,14 @@ namespace Domain.Services
             _respository = respository;
         }
 
-        public async Task<TEntity> FindById(string id)
+        public async Task<TEntity> GetById(string id)
         {
-            return await _respository.FindById(id);
+            return await _respository.GetById(id);
         }
 
-        public async Task<ICollection<TEntity>> FindAll()
+        public async Task<ICollection<TEntity>> GetAll()
         {
-            return await _respository.FindAll();
+            return await _respository.GetAll();
         }
 
         public async Task<TEntity> Save(TEntity entity)

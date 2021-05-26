@@ -2,7 +2,7 @@
 
 namespace Application.DTO
 {
-    public class CashInDTO
+    public class CashOutDTO
     {
         public string Id { get; set; }
         public string Description { get; set; }
@@ -10,7 +10,7 @@ namespace Application.DTO
         public double Value { get; set; }
         public DateTime CreationDate { get; set; }
 
-        public CashInDTO()
+        public CashOutDTO()
         {
         }
     }

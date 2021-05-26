@@ -7,21 +7,21 @@ namespace Infrastructure.Adapter.Map
 {
     public class CashInMapper : ICashInMapper
     {
-        ICollection<CashInDTO> CashInDTOs { get; set; }
+        List<CashInDTO> CashInDTOs = new List<CashInDTO>();
 
-        public CashIn MapperToEntity(CashInDTO CashInDTO)
+        public CashIn MapperToEntity(CashInDTO cashInDTO)
         {
             CashIn CashIn = new CashIn
             (
-                CashInDTO.Description,
-                CashInDTO.Month,
-                CashInDTO.Value
+                cashInDTO.Description,
+                cashInDTO.Month,
+                cashInDTO.Value
             );
 
             return CashIn;
         }
 
-        public ICollection<CashInDTO> MapperListCashIn(ICollection<CashIn> cashIns)
+        public ICollection<CashInDTO> MapperListUser(ICollection<CashIn> cashIns)
         {
             foreach (var cashIn in cashIns)
             {

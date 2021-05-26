@@ -1,13 +1,12 @@
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Domain.Core.Services
+namespace Domain.Core.Service
 {
     public interface IBaseService<TEntity> where TEntity : class
     {
-        Task<TEntity> FindById(string id);
-        Task<ICollection<TEntity>> FindAll();
+        Task<TEntity> GetById(string id);
+        Task<ICollection<TEntity>> GetAll();
         Task<TEntity> Save(TEntity entity);
         Task<TEntity> Update(string id, TEntity entity); 
     }

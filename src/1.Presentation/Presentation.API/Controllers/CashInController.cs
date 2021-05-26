@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Application.Interfaces;
 using Application.DTO;
+using System.Threading.Tasks;
 
 namespace Presentation.API.Controllers
 {
@@ -17,17 +18,17 @@ namespace Presentation.API.Controllers
         }
 
         [HttpPost]
-        public ActionResult Post([FromBody] CashInDTO cashInDTO)
+        public async Task<ActionResult> Post([FromBody] CashInDTO cashInDTO)
         {
-            var cashIn = _applicantion.Save(cashInDTO);
+            var cashIn = await _applicantion.Save(cashInDTO);
             
             return StatusCode(201, "CashIn adicionado com sucesso");
         }
 
         [HttpGet]
-        public ActionResult Get()
+        public async Task<ActionResult> GetAsync()
         {
-            var CashIns = _applicantion.FindAll();
+            var CashIns = await _applicantion.GetAll();
             
             return Ok(CashIns);
         }

@@ -5,9 +5,9 @@ using Domain.Entities;
 
 namespace Application.Interfaces
 {
-    public interface ICashInApplication
+    public interface IUserApplication
     {
-        Task<ICollection<CashInDTO>> FindAll();
-        Task<CashInDTO> Save(CashInDTO cashInDTO);
+        Task<ICollection<UserDTO>> GetAll();
+        Task<UserDTO> Save(UserDTO userDTO);
     }
 }

@@ -23,19 +23,19 @@ namespace Infrastructure.Repository
             return entity;
         }
 
-        public async Task<TEntity> FindById(string id)
+        public async Task<TEntity> GetById(string id)
         {
             var filter = Builders<TEntity>.Filter.Eq("_id", id);
-            var entity = await _entityCollection.Find(filter).FirstOrDefaultAsync();
+            var entity = await _entityCollection.Get(filter).FirstOrDefaultAsync();
 
             return entity;
         }
 
-        public async Task<ICollection<TEntity>> FindAll()
+        public async Task<ICollection<TEntity>> GetAll()
         {
-            var entity = await _entityCollection.Find(Builders<TEntity>.Filter.Empty).ToListAsync();
+            var entities = await _entityCollection.Get(Builders<TEntity>.Filter.Empty).ToListAsync();
 
-            return entity;
+            return entities;
         }
 
         public async Task<TEntity> Update(string id, TEntity entity)

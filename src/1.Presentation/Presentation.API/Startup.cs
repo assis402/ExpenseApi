@@ -6,6 +6,15 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Infrastructure.Data;
 using Application.Services;
+using Application.Interfaces;
+using Infrastructure.Adapter.Interfaces;
+using Infrastructure.Adapter.Map;
+using Domain.Core.Repository;
+using Domain.Core.Services;
+using Domain.Services;
+using Infrastructure.Repository;
+using Domain.Entities;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.API
 {
@@ -21,12 +30,17 @@ namespace Presentation.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<ExpenseDB>();
-            services.AddScoped<CashInApplication>();
+            services.AddScoped<ICashInApplication, CashInApplication>();
+            services.AddScoped<IBaseService<CashIn>, BaseService<CashIn>>();
+            services.AddScoped<IRepository<CashIn>, Repository<CashIn>>();
+            services.AddScoped<ICashInMapper, CashInMapper>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ExpenseApi", Version = "v1" });
             });
+            services.AddMemoryCache();
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
