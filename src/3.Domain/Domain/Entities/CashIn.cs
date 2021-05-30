@@ -1,4 +1,5 @@
-﻿using MongoDB.Bson;
+﻿using System;
+using MongoDB.Bson;
 
 namespace Domain.Entities
 {
@@ -8,19 +9,21 @@ namespace Domain.Entities
         public int Month { get; private set; }
         public double Value { get; set; }
 
-        public CashIn(ObjectId id, string description, int month, double value)
+        public CashIn(string id, string description, int month, double value, DateTime creationDate)
         {
-            Id = id;
+            Id = ObjectId.Parse(id);
             Description = description;
             Month = month;
             Value = value;
+            CreationDate = creationDate; 
         }
 
-        public CashIn(string description, int month, double value)
+        public CashIn(string description, int month, double value, DateTime creationDate)
         {
             Description = description;
             Month = month;
             Value = value;
+            CreationDate = creationDate;
         }
 
         public void SetId(){

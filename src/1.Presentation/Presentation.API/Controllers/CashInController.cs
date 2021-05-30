@@ -2,6 +2,7 @@
 using Application.Interfaces;
 using Application.DTO;
 using System.Threading.Tasks;
+using System;
 
 namespace Presentation.API.Controllers
 {
@@ -42,9 +43,9 @@ namespace Presentation.API.Controllers
         }
 
         [HttpDelete]
-        public async Task<ActionResult> Delete([FromBody] CashInDTO cashInDTO)
+        public async Task<ActionResult> Delete(string userId, string cashInId)
         {
-            await _applicantion.Delete(cashInDTO);
+            await _applicantion.Delete(userId, cashInId);
             
             return Ok();
         }

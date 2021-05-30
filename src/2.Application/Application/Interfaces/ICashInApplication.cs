@@ -10,6 +10,6 @@ namespace Application.Interfaces
         Task<ICollection<CashInDTO>> GetAllByUserIdAndMounth(string userId, int month);
         Task<CashInDTO> Save(CashInDTO cashInDTO);
         Task Update(CashInDTO cashInDTO);
-        Task Delete(CashInDTO cashIn);
+        Task Delete(string userId, string cashInId);
     }
 }

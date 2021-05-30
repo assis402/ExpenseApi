@@ -1,7 +1,9 @@
 using System.Collections.Generic;
+using System.Linq;
 using Application.DTO;
 using Infrastructure.Adapter.Interfaces;
 using Domain.Entities;
+using MongoDB.Bson;
 
 namespace Infrastructure.Adapter.Map
 {
@@ -11,14 +13,31 @@ namespace Infrastructure.Adapter.Map
 
         public CashIn MapperToEntity(CashInDTO cashInDTO)
         {
-            CashIn CashIn = new CashIn
-            (
-                cashInDTO.Description,
-                cashInDTO.Month,
-                cashInDTO.Value
-            );
+            if(cashInDTO.Id != null)
+            {
+                CashIn CashIn = new CashIn
+                (
+                    cashInDTO.Id,
+                    cashInDTO.Description,
+                    cashInDTO.Month,
+                    cashInDTO.Value,
+                    cashInDTO.CreationDate
+                );
 
-            return CashIn;
+                return CashIn;
+            }
+            else 
+            {
+                CashIn CashIn = new CashIn
+                (
+                    cashInDTO.Description,
+                    cashInDTO.Month,
+                    cashInDTO.Value,
+                    cashInDTO.CreationDate
+                );
+                
+                return CashIn;
+            }
         }
 
         public ICollection<CashInDTO> MapperListCashIn(ICollection<CashIn> cashIns)

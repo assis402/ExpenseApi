@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Application.DTO;
 using Application.Interfaces;
@@ -27,6 +28,7 @@ namespace Application.Services
 
         public async Task<CashInDTO> Save(CashInDTO cashInDTO)
         {   
+            cashInDTO.CreationDate = DateTime.UtcNow.AddHours(-3);
             CashIn cashIn = _mapper.MapperToEntity(cashInDTO);
             cashIn = await _service.Save(cashInDTO.UserId, cashIn);
             return _mapper.MapperToDTO(cashIn);
@@ -38,9 +40,9 @@ namespace Application.Services
             await _service.Update(cashInDTO.UserId, cashIn);
         }
 
-        public async Task Delete(CashInDTO cashIn)
+        public async Task Delete(string userId, string cashInId)
         {   
-            await _service.Delete(cashIn.UserId, cashIn.Id);
+            await _service.Delete(userId, cashInId);
         }
     }
 }

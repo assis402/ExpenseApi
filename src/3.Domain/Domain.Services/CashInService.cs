@@ -19,7 +19,7 @@ namespace Domain.Services
         public async Task<ICollection<CashIn>> GetAllByUserIdAndMounth(string userId, int month)
         {
             User user = await _respository.GetById(userId);
-            return user.CashIns.Where(cashIn => cashIn.Month == month).OrderBy(cashIn => cashIn.Id).ToList();
+            return user.CashIns.Where(cashIn => cashIn.Month == month).OrderBy(cashIn => cashIn.CreationDate).ToList();
         }
 
         public async Task<CashIn> Save(string userId, CashIn cashIn)
@@ -34,7 +34,7 @@ namespace Domain.Services
         public async Task Update(string userId, CashIn cashIn)
         {
             User user = await _respository.GetById(userId);
-            user.CashIns.Where(c => c.Id == cashIn.Id).Select(c => { c.Value = cashIn.Value; return c; }).ToList();
+            user.CashIns.Where(c => c.Id == cashIn.Id).Select(c => { c = cashIn; return c; }).ToList();
             await _respository.Update(user.Id.ToString(), user);
         }
 
