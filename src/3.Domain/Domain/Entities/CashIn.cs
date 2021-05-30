@@ -1,16 +1,13 @@
 ﻿using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
 
 namespace Domain.Entities
 {
-    public class CashIn
+    public class CashIn : Base
     {
-        [BsonId]
-        public ObjectId Id { get; set; }
         public string Description { get; private set; }
         public int Month { get; private set; }
-        public double Value { get; private set; }
-        
+        public double Value { get; set; }
+
         public CashIn(ObjectId id, string description, int month, double value)
         {
             Id = id;
@@ -24,6 +21,10 @@ namespace Domain.Entities
             Description = description;
             Month = month;
             Value = value;
+        }
+
+        public void SetId(){
+            Id = ObjectId.GenerateNewId();
         }
     }
 }

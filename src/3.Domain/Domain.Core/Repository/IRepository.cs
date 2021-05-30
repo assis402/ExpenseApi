@@ -8,6 +8,6 @@ namespace Domain.Core.Repository
         Task<TEntity> GetById(string id);
         Task<ICollection<TEntity>> GetAll();
         Task<TEntity> Save(TEntity entity);
-        Task<TEntity> Update(string id, TEntity entity); 
+        Task Update(string id, TEntity entity); 
     }
 }

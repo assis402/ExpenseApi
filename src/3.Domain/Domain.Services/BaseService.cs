@@ -29,9 +29,9 @@ namespace Domain.Services
             return await _respository.Save(entity);
         }
 
-        public async Task<TEntity> Update(string id, TEntity entity)
+        public async Task Update(string id, TEntity entity)
         {
-            return await _respository.Update(id, entity);
+            await _respository.Update(id, entity);
         }
     }
 }

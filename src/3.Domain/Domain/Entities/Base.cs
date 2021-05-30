@@ -8,6 +8,6 @@ namespace Domain.Entities
     {
         [BsonId]
         public ObjectId Id { get; set; }
-        public DateTime CreationDate { get; set; }
+        public DateTime CreationDate { get; set; } = DateTime.UtcNow;
     }
 }

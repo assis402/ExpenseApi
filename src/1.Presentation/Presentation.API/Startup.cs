@@ -10,11 +10,16 @@ using Application.Interfaces;
 using Infrastructure.Adapter.Interfaces;
 using Infrastructure.Adapter.Map;
 using Domain.Core.Repository;
-using Domain.Core.Services;
+using Domain.Core.Service;
 using Domain.Services;
 using Infrastructure.Repository;
 using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+
+
+
 
 namespace Presentation.API
 {
@@ -29,18 +34,39 @@ namespace Presentation.API
 
         public void ConfigureServices(IServiceCollection services)
         {
+            //MongoDB
             services.AddSingleton<ExpenseDB>();
+
+            //Applications
+            services.AddScoped<ICashOutApplication, CashOutApplication>();
             services.AddScoped<ICashInApplication, CashInApplication>();
-            services.AddScoped<IBaseService<CashIn>, BaseService<CashIn>>();
-            services.AddScoped<IRepository<CashIn>, Repository<CashIn>>();
+            services.AddScoped<IUserApplication, UserApplication>();
+
+            //Servies
+            services.AddScoped<IBaseService<User>, BaseService<User>>();
+            services.AddScoped<ICashInService, CashInService>();
+            services.AddScoped<ICashOutService, CashOutService>();
+            services.AddScoped<IUserService, UserService>();
+
+            //Mappers
             services.AddScoped<ICashInMapper, CashInMapper>();
+            services.AddScoped<ICashOutMapper, CashOutMapper>();
+            services.AddScoped<IUserMapper, UserMapper>();
+
+            //Repository
+            services.AddScoped<IRepository<User>, Repository<User>>();
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ExpenseApi", Version = "v1" });
             });
             services.AddMemoryCache();
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
+                    ;
+            services.AddControllers()
+           .AddNewtonsoftJson(opt => 
+                 opt.SerializerSettings.ContractResolver = new DefaultContractResolver());
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

@@ -21,7 +21,7 @@ namespace Infrastructure.Adapter.Map
             return CashIn;
         }
 
-        public ICollection<CashInDTO> MapperListUser(ICollection<CashIn> cashIns)
+        public ICollection<CashInDTO> MapperListCashIn(ICollection<CashIn> cashIns)
         {
             foreach (var cashIn in cashIns)
             {
@@ -30,7 +30,8 @@ namespace Infrastructure.Adapter.Map
                     Id = cashIn.Id.ToString(),
                     Description = cashIn.Description,
                     Month = cashIn.Month,
-                    Value = cashIn.Value
+                    Value = cashIn.Value,
+                    CreationDate = cashIn.CreationDate
                 };
 
                 CashInDTOs.Add(CashInDTO);
@@ -46,7 +47,8 @@ namespace Infrastructure.Adapter.Map
                 Id = cashIn.Id.ToString(),
                 Description = cashIn.Description,
                 Month = cashIn.Month,
-                Value = cashIn.Value
+                Value = cashIn.Value,
+                CreationDate = cashIn.CreationDate
             };
 
             return CashInDTO;

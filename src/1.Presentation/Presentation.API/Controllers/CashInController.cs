@@ -26,11 +26,27 @@ namespace Presentation.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetAsync()
+        public async Task<ActionResult> Get(string userId, int month)
         {
-            var CashIns = await _applicantion.GetAll();
+            var CashIns = await _applicantion.GetAllByUserIdAndMounth(userId, month);
             
             return Ok(CashIns);
+        }
+
+        [HttpPut]
+        public async Task<ActionResult> Put([FromBody] CashInDTO cashInDTO)
+        {
+            await _applicantion.Update(cashInDTO);
+            
+            return Ok();
+        }
+
+        [HttpDelete]
+        public async Task<ActionResult> Delete([FromBody] CashInDTO cashInDTO)
+        {
+            await _applicantion.Delete(cashInDTO);
+            
+            return Ok();
         }
     }
 }

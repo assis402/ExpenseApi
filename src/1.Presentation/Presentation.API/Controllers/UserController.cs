@@ -26,7 +26,7 @@ namespace Presentation.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetAsync()
+        public async Task<ActionResult> Get()
         {
             var Users = await _applicantion.GetAll();
             

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Infrastructure.Data;
 using MongoDB.Driver;
 using Domain.Core.Repository;
+using MongoDB.Bson;
 
 namespace Infrastructure.Repository
 {
@@ -25,25 +26,23 @@ namespace Infrastructure.Repository
 
         public async Task<TEntity> GetById(string id)
         {
-            var filter = Builders<TEntity>.Filter.Eq("_id", id);
-            var entity = await _entityCollection.Get(filter).FirstOrDefaultAsync();
+            var filter = Builders<TEntity>.Filter.Eq("_id", ObjectId.Parse(id));
+            var entity = await _entityCollection.Find(filter).FirstOrDefaultAsync();
 
             return entity;
         }
 
         public async Task<ICollection<TEntity>> GetAll()
         {
-            var entities = await _entityCollection.Get(Builders<TEntity>.Filter.Empty).ToListAsync();
+            var entities = await _entityCollection.Find(Builders<TEntity>.Filter.Empty).ToListAsync();
 
             return entities;
         }
 
-        public async Task<TEntity> Update(string id, TEntity entity)
+        public async Task Update(string id, TEntity entity)
         {
-            var filter = Builders<TEntity>.Filter.Eq("_id", id);
+            var filter = Builders<TEntity>.Filter.Eq("_id", ObjectId.Parse(id));
             await _entityCollection.ReplaceOneAsync(filter, entity);
-            return entity;
         }
-
     }
 }

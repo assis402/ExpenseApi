@@ -15,17 +15,5 @@ namespace Domain.Services
         {
             _respository = respository;
         }
-
-        public async Task<ICollection<CashIn>> GetAllCashInByUserIdAndMounth(string userId, int month)
-        {
-            User user = await _respository.GetById(userId);
-            return user.CashIns.Where(cashIn => cashIn.Month == month).ToList();
-        }
-
-        public async Task<ICollection<CashOut>> GetAllCashOutByUserIdAndMounth(string userId, int month)
-        {
-            User user = await _respository.GetById(userId);
-            return user.CashOuts.Where(cashOut => cashOut.Month == month).ToList();
-        }
     }
 }
