@@ -7,9 +7,9 @@ namespace Application.Interfaces
 {
     public interface ICashInApplication
     {
-        Task<ICollection<CashInDTO>> GetAllByUserIdAndMounth(string userId, int month);
+        Task<ICollection<CashInDTO>> GetAllByUserIdAndMounth(GetCashInDTO getCashInDTO);
         Task<CashInDTO> Save(CashInDTO cashInDTO);
         Task Update(CashInDTO cashInDTO);
-        Task Delete(string userId, string cashInId);
+        Task Delete(DeleteCashInDTO deleteCashInDTO);
     }
 }

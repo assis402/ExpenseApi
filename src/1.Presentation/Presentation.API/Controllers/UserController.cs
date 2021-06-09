@@ -2,6 +2,8 @@
 using Application.Interfaces;
 using Application.DTO;
 using System.Threading.Tasks;
+using Presentation.Utils;
+using Presentation.Utils.Messages;
 
 namespace Presentation.API.Controllers
 {
@@ -9,7 +11,6 @@ namespace Presentation.API.Controllers
     [Route("[controller]")]
     public class UserController : ControllerBase
     {
-
         private readonly IUserApplication _applicantion;
 
         public UserController(IUserApplication applicantion)
@@ -20,17 +21,45 @@ namespace Presentation.API.Controllers
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] UserDTO userDTO)
         {
-            var user = await _applicantion.Save(userDTO);
-            
-            return StatusCode(201, "User adicionado com sucesso");
+            try
+            {
+                var user = await _applicantion.Save(userDTO);
+                
+                return StatusCode(201, Responses.SuccessMessage(string.Format(InformationMessages.INF001(), "User"), user));
+            }
         }
 
         [HttpGet]
         public async Task<ActionResult> Get()
         {
-            var Users = await _applicantion.GetAll();
-            
-            return Ok(Users);
+            try
+            {
+                var Users = await _applicantion.GetAll();
+                
+                return Ok(Users);
+            }
+        }
+
+        [HttpPut]
+        public async Task<ActionResult> Put([FromBody] UserDTO userDTO)
+        {
+            try 
+            {
+                var user = await _applicantion.Put(userDTO);
+                
+                return StatusCode(201, Responses.SuccessMessage(string.Format(InformationMessages.INF001(), "User"), user));
+            }
+        }
+
+        [HttpDelete]
+        public async Task<ActionResult> Delete([FromBody] UserDTO userDTO)
+        {
+            try 
+            {
+                var user = await _applicantion.Save(userDTO);
+                
+                return StatusCode(201, Responses.SuccessMessage(string.Format(InformationMessages.INF001(), "User"), user));
+            }
         }
     }
 }

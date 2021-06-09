@@ -7,7 +7,7 @@ namespace Domain.Entities
     {
         public string Description { get; private set; }
         public int Month { get; private set; }
-        public double Value { get; set; }
+        public double Value { get; private set; }
 
         public CashIn(string id, string description, int month, double value, DateTime creationDate)
         {
@@ -28,6 +28,12 @@ namespace Domain.Entities
 
         public void SetId(){
             Id = ObjectId.GenerateNewId();
+        }
+
+        public void Update(CashIn changedCashIn)
+        {
+            Description = changedCashIn.Description;
+            Value = changedCashIn.Value;
         }
     }
 }

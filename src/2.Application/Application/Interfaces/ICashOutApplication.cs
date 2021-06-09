@@ -7,9 +7,9 @@ namespace Application.Interfaces
 {
     public interface ICashOutApplication
     {
-        Task<ICollection<CashOutDTO>> GetAllByUserIdAndMounth(string userId, int month);
+        Task<ICollection<CashOutDTO>> GetAllByUserIdAndMounth(GetCashOutDTO getCashOutDTO);
         Task<CashOutDTO> Save(CashOutDTO cashOutDTO);
         Task Update(CashOutDTO cashOutDTO);
-        Task Delete(CashOutDTO cashOut);
+        Task Delete(DeleteCashOutDTO deleteCashOutDTO);
     }
 }

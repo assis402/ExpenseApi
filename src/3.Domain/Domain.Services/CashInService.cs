@@ -34,7 +34,7 @@ namespace Domain.Services
         public async Task Update(string userId, CashIn cashIn)
         {
             User user = await _respository.GetById(userId);
-            user.CashIns.Where(c => c.Id == cashIn.Id).Select(c => { c = cashIn; return c; }).ToList();
+            user.CashIns.Where(c => c.Id == cashIn.Id).Select(c => { c.Update(cashIn); return c; }).ToList();
             await _respository.Update(user.Id.ToString(), user);
         }
 

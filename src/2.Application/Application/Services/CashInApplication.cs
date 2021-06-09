@@ -20,9 +20,9 @@ namespace Application.Services
             _mapper = mapper;
         }
 
-        public async Task<ICollection<CashInDTO>> GetAllByUserIdAndMounth(string userId, int month)
+        public async Task<ICollection<CashInDTO>> GetAllByUserIdAndMounth(GetCashInDTO getCashInDTO)
         {
-            var cashIns = await _service.GetAllByUserIdAndMounth(userId, month);
+            var cashIns = await _service.GetAllByUserIdAndMounth(getCashInDTO.UserId, getCashInDTO.Month);
             return _mapper.MapperListCashIn(cashIns);
         }
 
@@ -40,9 +40,9 @@ namespace Application.Services
             await _service.Update(cashInDTO.UserId, cashIn);
         }
 
-        public async Task Delete(string userId, string cashInId)
+        public async Task Delete(DeleteCashInDTO deleteCashInDTO)
         {   
-            await _service.Delete(userId, cashInId);
+            await _service.Delete(deleteCashInDTO.UserId, deleteCashInDTO.CashInId);
         }
     }
 }

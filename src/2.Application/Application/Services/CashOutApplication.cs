@@ -19,9 +19,9 @@ namespace Application.Services
             _mapper = mapper;
         }
 
-        public async Task<ICollection<CashOutDTO>> GetAllByUserIdAndMounth(string userId, int month)
+        public async Task<ICollection<CashOutDTO>> GetAllByUserIdAndMounth(GetCashOutDTO getCashOutDTO)
         {
-            var cashOuts = await _service.GetAllByUserIdAndMounth(userId, month);
+            var cashOuts = await _service.GetAllByUserIdAndMounth(getCashOutDTO.UserId, getCashOutDTO.Month);
             return _mapper.MapperListCashOut(cashOuts);
         }
 
@@ -38,9 +38,9 @@ namespace Application.Services
             await _service.Update(cashOutDTO.UserId, cashOut);
         }
 
-        public async Task Delete(CashOutDTO cashOut)
+        public async Task Delete(DeleteCashOutDTO deleteCashOut)
         {   
-            await _service.Delete(cashOut.UserId, cashOut.Id);
+            await _service.Delete(deleteCashOut.UserId, deleteCashOut.CashOutId);
         }
     }
 }

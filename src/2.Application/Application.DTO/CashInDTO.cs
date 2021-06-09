@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using Application.DTO.Validators;
+using Presentation.Utils;
+using Presentation.Utils.Messages;
 
 namespace Application.DTO
 {
@@ -13,6 +17,26 @@ namespace Application.DTO
 
         public CashInDTO()
         {
+        }
+
+        public bool Validate()
+        {
+            List<string> Errors = new List<string>();
+            
+            var validator = new CashInDTOValidator();
+            var validation = validator.Validate(this);
+
+            if(!validation.IsValid)
+            {
+                foreach(var error in validation.Errors)
+                {
+                    Errors.Add(error.ErrorMessage);
+                }
+
+                throw new AppException(ExceptionMessages.EXC014(), Errors);
+            }
+
+            return true;
         }
     }
 }

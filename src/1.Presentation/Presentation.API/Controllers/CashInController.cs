@@ -3,6 +3,8 @@ using Application.Interfaces;
 using Application.DTO;
 using System.Threading.Tasks;
 using System;
+using Presentation.Utils;
+using Presentation.Utils.Messages;
 
 namespace Presentation.API.Controllers
 {
@@ -10,7 +12,6 @@ namespace Presentation.API.Controllers
     [Route("[controller]")]
     public class CashInController : ControllerBase
     {
-
         private readonly ICashInApplication _applicantion;
 
         public CashInController(ICashInApplication applicantion)
@@ -21,33 +22,84 @@ namespace Presentation.API.Controllers
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] CashInDTO cashInDTO)
         {
-            var cashIn = await _applicantion.Save(cashInDTO);
-            
-            return StatusCode(201, "CashIn adicionado com sucesso");
+            try
+            {
+                cashInDTO.Validate();
+                var cashIn = await _applicantion.Save(cashInDTO);
+
+                return StatusCode(201, Responses.SuccessMessage(string.Format(InformationMessages.INF001(), "CashIn"), cashIn));
+            }
+            catch(AppException ex)
+            {
+                return BadRequest(Responses.ErrorMessage(ex.Message, ex.Errors));
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(500, Responses.ApplicationErrorMessage());
+            }
         }
 
         [HttpGet]
         public async Task<ActionResult> Get(string userId, int month)
         {
-            var CashIns = await _applicantion.GetAllByUserIdAndMounth(userId, month);
-            
-            return Ok(CashIns);
+            try 
+            {
+                GetCashInDTO getCashInDTO = new GetCashInDTO(userId, month);
+
+                getCashInDTO.Validate();
+                var cashIns = await _applicantion.GetAllByUserIdAndMounth(getCashInDTO);
+
+                return Ok(Responses.SuccessMessage(cashIns));
+            }
+            catch(AppException ex)
+            {
+                return BadRequest(Responses.ErrorMessage(ex.Message, ex.Errors));
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(500, Responses.ApplicationErrorMessage());
+            }
         }
 
         [HttpPut]
         public async Task<ActionResult> Put([FromBody] CashInDTO cashInDTO)
         {
-            await _applicantion.Update(cashInDTO);
-            
-            return Ok();
+            try 
+            {
+                cashInDTO.Validate();
+                await _applicantion.Update(cashInDTO);
+                
+                return Ok(Responses.SuccessMessage(string.Format(InformationMessages.INF003(), "CashIn")));
+            }
+            catch(AppException ex)
+            {
+                return BadRequest(Responses.ErrorMessage(ex.Message, ex.Errors));
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(500, Responses.ApplicationErrorMessage());
+            }
         }
 
         [HttpDelete]
-        public async Task<ActionResult> Delete(string userId, string cashInId)
+        public async Task<ActionResult> Delete(DeleteCashInDTO deleteCashInDTO)
         {
-            await _applicantion.Delete(userId, cashInId);
-            
-            return Ok();
+            try
+            {
+                DeleteCashOutDTO getCashOutDTO = new DeleteCashOutDTO(deleteCashInDTO.UserId, deleteCashInDTO.CashInId);
+
+                await _applicantion.Delete(deleteCashInDTO);
+
+                return Ok(Responses.SuccessMessage(string.Format(InformationMessages.INF004(), "CashIn")));
+            }
+            catch(AppException ex)
+            {
+                return BadRequest(Responses.ErrorMessage(ex.Message, ex.Errors));
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(500, Responses.ApplicationErrorMessage());
+            }
         }
     }
 }

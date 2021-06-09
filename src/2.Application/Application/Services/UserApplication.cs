@@ -31,5 +31,16 @@ namespace Application.Services
             user = await _service.Save(user);
             return _mapper.MapperToDTO(user);
         }
+
+        public async Task Update(UserDTO userDTO)
+        {   
+            User user = _mapper.MapperToEntity(userDTO);
+            await _service.Update(userDTO.Id, user);
+        }
+
+        public async Task Delete(DeleteCashOutDTO deleteCashOutDTO)
+        {   
+            await _service.Delete(deleteCashOutDTO.UserId, deleteCashOutDTO.CashOutId);
+        }
     }
 }
