@@ -8,6 +8,7 @@ namespace Domain.Core.Service
         Task<TEntity> GetById(string id);
         Task<ICollection<TEntity>> GetAll();
         Task<TEntity> Save(TEntity entity);
-        Task Update(string id, TEntity entity); 
+        Task Update(string id, TEntity entity);
+        Task Delete(string id);
     }
 }

@@ -44,5 +44,11 @@ namespace Infrastructure.Repository
             var filter = Builders<TEntity>.Filter.Eq("_id", ObjectId.Parse(id));
             await _entityCollection.ReplaceOneAsync(filter, entity);
         }
+
+        public async Task Delete(string id)
+        {
+            var filter = Builders<TEntity>.Filter.Eq("_id", ObjectId.Parse(id));
+            await _entityCollection.DeleteOneAsync(filter);
+        }
     }
 }

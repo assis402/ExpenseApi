@@ -33,5 +33,10 @@ namespace Domain.Services
         {
             await _respository.Update(id, entity);
         }
+
+        public async Task Delete(string id)
+        {
+            await _respository.Delete(id);
+        }
     }
 }

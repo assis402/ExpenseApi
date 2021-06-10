@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace Presentation.Utils
@@ -32,6 +33,11 @@ namespace Presentation.Utils
                 Success = true,
                 Data = data
             };
+        }
+
+        public static object SuccessMessage(object p, object clinicalUnit)
+        {
+            throw new NotImplementedException();
         }
 
         public static AppResult ApplicationErrorMessage()

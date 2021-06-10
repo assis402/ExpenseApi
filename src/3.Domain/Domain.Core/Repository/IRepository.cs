@@ -9,5 +9,6 @@ namespace Domain.Core.Repository
         Task<ICollection<TEntity>> GetAll();
         Task<TEntity> Save(TEntity entity);
         Task Update(string id, TEntity entity); 
+        Task Delete(string id); 
     }
 }

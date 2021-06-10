@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Domain.Enums;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
@@ -10,6 +11,7 @@ namespace Domain.Entities
         public string Email { get; private set; }
         public string Password { get; private set; }
         public string Name { get; private set; }
+        public UserRole Role { get; private set; }
         private ICollection<CashIn> _cashIns;
         public ICollection<CashIn> CashIns
         {

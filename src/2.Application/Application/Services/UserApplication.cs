@@ -38,9 +38,9 @@ namespace Application.Services
             await _service.Update(userDTO.Id, user);
         }
 
-        public async Task Delete(DeleteCashOutDTO deleteCashOutDTO)
-        {   
-            await _service.Delete(deleteCashOutDTO.UserId, deleteCashOutDTO.CashOutId);
+        public async Task Delete(DeleteUserDTO deleteUserDTO)
+        {
+            await _service.Delete(deleteUserDTO.UserId);
         }
     }
 }

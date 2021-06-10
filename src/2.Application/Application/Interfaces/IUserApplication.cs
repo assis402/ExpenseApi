@@ -9,5 +9,7 @@ namespace Application.Interfaces
     {
         Task<ICollection<UserDTO>> GetAll();
         Task<UserDTO> Save(UserDTO userDTO);
+        Task Update(UserDTO userDTO);
+        Task Delete(DeleteUserDTO deleteUserDTO);
     }
 }

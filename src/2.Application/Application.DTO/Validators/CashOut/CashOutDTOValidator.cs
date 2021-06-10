@@ -4,9 +4,9 @@ using Application.DTO;
 
 namespace Application.DTO.Validators
 {
-    public class CashInDTOValidator : AbstractValidator<CashOutDTO>
+    public class CashOutDTOValidator : AbstractValidator<CashOutDTO>
     {
-        public CashInDTOValidator()
+        public CashOutDTOValidator()
         {
             RuleFor(c => c)
                 .NotEmpty()
