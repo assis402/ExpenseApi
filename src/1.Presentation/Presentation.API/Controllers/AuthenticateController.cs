@@ -14,41 +14,26 @@ namespace Presentation.API.Controllers
     [Route("[controller]")]
     public class AuthenticateController : ControllerBase
     {
-        private readonly IConfiguration configuration;
-        private readonly ITokenGenerator tokenGenerator;
-        private readonly IUserApplicationService userApplicationService;
-        private readonly IClinicalUnitApplicationService clinicalUnitApplicationService;
-
-        public AuthenticateController(IConfiguration configuration, ITokenGenerator tokenGenerator, IUserApplicationService userApplicationService, IClinicalUnitApplicationService clinicalUnitApplicationService)
-        {
-            this.configuration = configuration;
-            this.tokenGenerator = tokenGenerator;
-            this.userApplicationService = userApplicationService;
-            this.clinicalUnitApplicationService = clinicalUnitApplicationService;
-        }
+        private readonly IConfiguration _configuration;
+        private readonly ITokenGenerator _tokenGenerator;
+        private readonly IUserApplication _applicantion;
+        
 
         [HttpPost]
         [AllowAnonymous]
-        public IActionResult Post([FromBody] JsonPost inputJson){
+        public IActionResult Post([FromBody] LoginDTO loginDTO){
             try
             {
-                inputJson.Validate();
-                
-                var clinicalUnit = clinicalUnitApplicationService.GetClinicalUnitById(inputJson.ClinicalUnitId);
+                loginDTO.Validate();
 
-                if(clinicalUnit == null)
-                    return BadRequest(Responses.ErrorMessage(string.Format(ExceptionMessages.EXC016(),"Clinical Unit")));
+                var login = _applicantion.Login(loginDTO);
 
-                UserDTO userDTO = inputJson.JsonPostToDTO();
-
-                var user = userApplicationService.GetUserToLogin(userDTO);
-
-                if (user != null)
+                if (login != null)
                 {
                     var Data = new
                     {
-                        Token = tokenGenerator.GenerateToken(user.Result),
-                        TokenExpires = DateTime.UtcNow.AddHours(int.Parse(configuration["Jwt:HoursToExpire"]))
+                        Token = _tokenGenerator.GenerateToken(login.Result),
+                        TokenExpires = DateTime.UtcNow.AddHours(int.Parse(_configuration["Jwt:HoursToExpire"]))
                     };
 
                     return Ok(Responses.SuccessMessage(InformationMessages.INF002(),Data));
@@ -56,7 +41,7 @@ namespace Presentation.API.Controllers
                 else
                     return StatusCode(401, Responses.UnauthorizedErrorMessage());
             }
-            catch(InputJsonException ex)
+            catch(AppException ex)
             {
                 return BadRequest(Responses.ErrorMessage(ex.Message, ex.Errors));
             }

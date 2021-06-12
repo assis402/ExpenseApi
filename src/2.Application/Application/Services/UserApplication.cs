@@ -42,5 +42,11 @@ namespace Application.Services
         {
             await _service.Delete(deleteUserDTO.UserId);
         }
+
+        public async Task<UserDTO> Login(LoginDTO loginDTO)
+        {   
+            User user = await _service.Login(loginDTO.Email, loginDTO.Password);
+            return user.IsNull() ? _mapper.MapperToDTO(user) : null;
+        }
     }
 }

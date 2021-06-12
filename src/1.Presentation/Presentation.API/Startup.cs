@@ -17,9 +17,9 @@ using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-
-
-
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace Presentation.API
 {
@@ -62,11 +62,31 @@ namespace Presentation.API
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ExpenseApi", Version = "v1" });
             });
             services.AddMemoryCache();
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
-                    ;
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
             services.AddControllers()
-           .AddNewtonsoftJson(opt => 
-                 opt.SerializerSettings.ContractResolver = new DefaultContractResolver());
+                    .AddNewtonsoftJson(opt => 
+                            opt.SerializerSettings.ContractResolver = new DefaultContractResolver());
+
+            //JWT
+            var secretKey = Configuration["Jwt:Key"];
+            
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(x =>
+            {
+                x.RequireHttpsMetadata = false;
+                x.SaveToken = true;
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secretKey)),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

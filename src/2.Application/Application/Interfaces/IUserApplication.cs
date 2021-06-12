@@ -11,5 +11,6 @@ namespace Application.Interfaces
         Task<UserDTO> Save(UserDTO userDTO);
         Task Update(UserDTO userDTO);
         Task Delete(DeleteUserDTO deleteUserDTO);
+        Task<UserDTO> Login(LoginDTO loginDTO);
     }
 }

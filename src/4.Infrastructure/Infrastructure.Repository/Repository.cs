@@ -32,6 +32,13 @@ namespace Infrastructure.Repository
             return entity;
         }
 
+        public async Task<TEntity> GetByFilter(FilterDefinition<TEntity> filter)
+        {
+            var entity = await _entityCollection.Find(filter).FirstOrDefaultAsync();
+
+            return entity;
+        }
+
         public async Task<ICollection<TEntity>> GetAll()
         {
             var entities = await _entityCollection.Find(Builders<TEntity>.Filter.Empty).ToListAsync();

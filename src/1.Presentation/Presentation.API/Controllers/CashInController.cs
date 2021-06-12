@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System;
 using Presentation.Utils;
 using Presentation.Utils.Messages;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Presentation.API.Controllers
 {
@@ -20,6 +21,7 @@ namespace Presentation.API.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult> Post([FromBody] CashInDTO cashInDTO)
         {
             try
@@ -40,6 +42,7 @@ namespace Presentation.API.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult> Get(string userId, int month)
         {
             try 
@@ -62,6 +65,7 @@ namespace Presentation.API.Controllers
         }
 
         [HttpPut]
+        [Authorize]
         public async Task<ActionResult> Put([FromBody] CashInDTO cashInDTO)
         {
             try 
@@ -82,6 +86,7 @@ namespace Presentation.API.Controllers
         }
 
         [HttpDelete]
+        [Authorize]
         public async Task<ActionResult> Delete(DeleteCashInDTO deleteCashInDTO)
         {
             try
