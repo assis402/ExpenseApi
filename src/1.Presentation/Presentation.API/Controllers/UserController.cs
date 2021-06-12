@@ -21,7 +21,7 @@ namespace Presentation.API.Controllers
         }
 
         [HttpPost]
-        [Authorize]
+        [AllowAnonymous]
         public async Task<ActionResult> Post([FromBody] UserDTO userDTO)
         {
             try
@@ -40,24 +40,24 @@ namespace Presentation.API.Controllers
             }
         }
 
-        // [HttpGet]
-        // public async Task<ActionResult> Get()
-        // {
-        //     try
-        //     {
-        //         var Users = await _applicantion.GetAll();
-                
-        //         return Ok(Users);
-        //     }
-        //     catch(AppException ex)
-        //     {
-        //         return BadRequest(Responses.ErrorMessage(ex.Message, ex.Errors));
-        //     }
-        //     catch(Exception ex)
-        //     {
-        //         return StatusCode(500, Responses.ApplicationErrorMessage());
-        //     }
-        // }
+        [HttpGet]
+        public async Task<ActionResult> Get()
+        {
+            try
+            {
+                var Users = await _applicantion.GetAll();
+            
+                return Ok(Users);
+            }
+            catch(AppException ex)
+            {
+                return BadRequest(Responses.ErrorMessage(ex.Message, ex.Errors));
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(500, Responses.ApplicationErrorMessage());
+            }
+        }
 
         [HttpPut]
         [Authorize]
